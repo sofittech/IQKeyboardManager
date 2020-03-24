@@ -33,6 +33,12 @@ import QuartzCore
 /**
 Codeless drop-in universal library allows to prevent issues of keyboard sliding up and cover UITextField/UITextView. Neither need to write any code nor any setup required and much more. A generic version of KeyboardManagement. https://developer.apple.com/library/ios/documentation/StringsTextFonts/Conceptual/TextAndWebiPhoneOS/KeyboardManagement/KeyboardManagement.html
 */
+// NSNotification name extension for toolBar buttons
+
+extension NSNotification.Name{
+    public static let previousBtnAction = Notification.Name("previous-btn-action")
+    public static let nextBtnAction = Notification.Name("next-btn-action")
+}
 
 @objc public class IQKeyboardManager: NSObject, UIGestureRecognizerDelegate {
     
@@ -567,6 +573,8 @@ Codeless drop-in universal library allows to prevent issues of keyboard sliding 
     /**	previousAction. */
     @objc internal func previousAction (_ barButton: IQBarButtonItem) {
         
+        NotificationCenter.default.post(name: .previousBtnAction, object: nil)
+        
         //If user wants to play input Click sound.
         if shouldPlayInputClicks == true {
             //Play Input Click Sound.
@@ -599,6 +607,9 @@ Codeless drop-in universal library allows to prevent issues of keyboard sliding 
     /**	nextAction. */
     @objc internal func nextAction (_ barButton: IQBarButtonItem) {
         
+        
+        
+        NotificationCenter.default.post(name: .nextBtnAction, object: nil)
         //If user wants to play input Click sound.
         if shouldPlayInputClicks == true {
             //Play Input Click Sound.
